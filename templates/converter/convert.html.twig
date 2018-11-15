@@ -3,12 +3,14 @@
 {% block title %}Text converter{% endblock %}
 
 {% block body %}
-    <h1>Text converter</h1>
+    <h2>Source:</h2>
 
-    [Place your form here]
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
 
     <h2>Result:</h2>
 
-    lowercase
+    {{ result }}
 
 {% endblock %}

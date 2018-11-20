@@ -20,6 +20,31 @@ class ConverterController extends AbstractController
      */
     public function convert(Request $request): Response
     {
-        return $this->render('converter/convert.html.twig', []);
+        $form = $this->createFormBuilder()
+            ->add('text', TextType::class) // text input
+            ->add('type', ChoiceType::class, [ // select (dropdown)
+                'choices' => [
+                    'Lowercase' => 'lower',
+                    'Uppercase' => 'upper'
+                ]
+            ])
+            ->add('convert', SubmitType::class, ['label' => 'Convert Text']) // submit
+            ->getForm();
+        
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $formData = $form->getData();
+            if($formData['type'] === 'lower') {
+                $result = strtolower($formData['text']);
+            } else {
+                $result = strtoupper($formData['text']);
+            }
+        }
+        
+        
+       return $this->render('converter/convert.html.twig', [
+            'form' => $form->createView(),
+            'result' => $text ?? null
+        ]);
     }
 }
